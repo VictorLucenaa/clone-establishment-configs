@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clonar Configurações</title>
+  </head>
+  <body
+    style="
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #add8e6;
+    "
+  >
+    <div
+      style="
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      "
+    >
+      <h1 style="text-align: center">Clonar Configurações</h1>
+      <form
+        id="cloneForm"
+        style="display: flex; flex-direction: column; gap: 10px"
+      >
+        <label for="sourceToken">Token de Origem:</label>
+        <input
+          type="text"
+          id="sourceToken"
+          name="sourceToken"
+          required
+          style="padding: 8px; border: 1px solid #ccc; border-radius: 5px"
+        />
+        <label for="destinationToken">Token de Destino:</label>
+        <input
+          type="text"
+          id="destinationToken"
+          name="destinationToken"
+          required
+          style="padding: 8px; border: 1px solid #ccc; border-radius: 5px"
+        />
+        <button
+          type="submit"
+          style="
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: green;
+            color: white;
+            cursor: pointer;
+          "
+        >
+          Clonar
+        </button>
+      </form>
+    </div>
+
+    <script>
+      document
+        .getElementById("cloneForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const sourceToken = document.getElementById("sourceToken").value;
+          const destinationToken =
+            document.getElementById("destinationToken").value;
+
+          try {
+            const response = await fetch("http://localhost:3000/clone", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ sourceToken, destinationToken }),
+            });
+
+            if (response.ok) {
+              alert("Configurações clonadas com sucesso!");
+            } else {
+              alert("Erro ao clonar configurações.");
+            }
+          } catch (error) {
+            console.error("Erro:", error);
+            alert("Erro ao clonar configurações.");
+          }
+        });
+    </script>
+  </body>
+</html>
